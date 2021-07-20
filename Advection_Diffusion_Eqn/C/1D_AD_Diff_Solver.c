@@ -134,7 +134,7 @@ int main(int argc, char* argv[])
   fclose(file);
  }
 
-/* if(rank == 0){
+ if(rank == 0){
   double* x = (double*)malloc(sizeof(double)*(N+1));
   double* f = (double*)malloc(sizeof(double)*(N+1));
   double* fo = (double*)malloc(sizeof(double)*(N+1));
@@ -156,7 +156,7 @@ int main(int argc, char* argv[])
   save_gnuplot(file, f, x, 0, N+1);
   fclose(file);
  }
-*/
+
 
  MPI_Finalize();
  return 0;

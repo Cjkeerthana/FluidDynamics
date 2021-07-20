@@ -1,0 +1,7 @@
+no_of_nodes: 200
+domain_length: 2.0
+velocity: 1.0
+diffusion_coefficient: 0.05
+wave_number: 1.0
+time: 1.0
+courant: 0.25
