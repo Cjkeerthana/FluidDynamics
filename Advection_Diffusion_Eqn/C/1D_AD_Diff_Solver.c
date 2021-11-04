@@ -138,23 +138,32 @@ int main(int argc, char* argv[])
   double* x = (double*)malloc(sizeof(double)*(N+1));
   double* f = (double*)malloc(sizeof(double)*(N+1));
   double* fo = (double*)malloc(sizeof(double)*(N+1));
+  double* ana = (double*)malloc(sizeof(double)*(N+1));
 
   for(size_t i=0; i<N+1; i++){
     x[i] = dx*i; 
     fo[i] = 0.5*sin(2*M_PI*waveNo*x[i]);
     f[i] = fo[i];
+    ana[i]=0.0;
   }
   
-  for(size_t it=0; it<1000; it++){
+  for(size_t it=0; it<=nstep; it++){
     evolve_FTCS(f, fo, 1, N, conv, diff);
     f[N] = fo[N] - conv*(fo[1]-fo[N-1]) + diff*(fo[1]-2*fo[N]+fo[N-1]);
     f[0] = f[N];
     swap(&f, &fo, tmp_array);
   }
+  for(size_t i=0; i<N+1; i++)
+     ana[i] = exp(-diffCoeff*time)*sin(2*M_PI*(x[i]-velocity*time));
+
   FILE* file;
   file = fopen("solution_serial.dat","w");
   save_gnuplot(file, f, x, 0, N+1);
   fclose(file);
+  file = fopen("solution_analytical.dat","w");
+  save_gnuplot(file, ana, x, 0, N+1);
+  fclose(file);
+
  }
 
 
